@@ -1,8 +1,11 @@
 const TestrailClass = require("./testrail");
+const CustomStepResults = require('./custom-step-results');
+
 const Mocha = require("mocha");
 const { EVENT_RUN_END, EVENT_TEST_FAIL, EVENT_TEST_PASS } =
   Mocha.Runner.constants;
 const { titleToCaseIds, logger } = require("./utils");
+
 const getenv = require("getenv");
 
 require("dotenv").config();
@@ -59,6 +62,8 @@ function getReporterOptions(reporterOptions) {
     ...reporterOptions
   };
 }
+
+export var customStepResults;
 
 function testrailReporter(runner, options) {
   this.results = [];
@@ -133,5 +138,6 @@ function testrailReporter(runner, options) {
     }
   });
 }
+
 
 module.exports = testrailReporter;
