@@ -62,7 +62,6 @@ function getReporterOptions(reporterOptions) {
   };
 }
 
-export var customStepResults;
 
 function testrailReporter(runner, options) {
   this.results = [];
