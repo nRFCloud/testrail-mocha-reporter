@@ -228,7 +228,11 @@ class TestrailClass {
   async addResults(runId, results) {
     try {
       logger(`Adding results to run with id ${runId}`);
-      await this.testrail.addResultsForCases(runId, results ? results : {});
+      try {
+        await this.testrail.addResultsForCases(runId, results ? results : {});
+      } catch (e) {
+        throw e
+      }
       logger(
         `Results published to https://${this.domain}/index.php?/runs/view/${runId}`
       );
@@ -258,6 +262,13 @@ class TestrailClass {
       logger("RunId cannot be 0");
       exit && exit(failures > 0 ? 1 : 0);
     } else {
+      if (process.env.TESTRAIL_CUSTOM_STEPS_FILE) {
+        const fs = require('fs');
+        const customStepResults = JSON.parse(fs.readFileSync(process.env.TESTRAIL_CUSTOM_STEPS_FILE));
+        for (let result of results) {
+          result.custom_step_results = customStepResults[`C${result.case_id}`]
+        }
+      }
       await this.addResults(runId, results);
       if (this.createRun === true || this.createRun === "true") {
         await this.closeRun(runId);

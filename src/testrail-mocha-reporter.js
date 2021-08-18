@@ -1,8 +1,7 @@
 const TestrailClass = require("./testrail");
-const CustomStepResults = require('./custom-step-results');
 
 const Mocha = require("mocha");
-const { EVENT_RUN_END, EVENT_TEST_FAIL, EVENT_TEST_PASS } =
+const { EVENT_RUN_END, EVENT_TEST_FAIL, EVENT_TEST_PASS, EVENT_RUN_BEGIN } =
   Mocha.Runner.constants;
 const { titleToCaseIds, logger } = require("./utils");
 
@@ -93,7 +92,15 @@ function testrailReporter(runner, options) {
   }
 
   let endCalled = false;
+  /*
+  EVENT_RUN_BEGIN,
+  EVENT_RUN_END,
+  EVENT_TEST_FAIL,
+  EVENT_TEST_PASS,
+  EVENT_SUITE_BEGIN,
+  EVENT_SUITE_END
 
+   */
   runner.on(EVENT_TEST_PASS, test => {
     const caseIds = titleToCaseIds(test.title);
     if (caseIds.length > 0) {
@@ -122,6 +129,7 @@ function testrailReporter(runner, options) {
     }
   });
 
+
   // Process the full suite
   runner.on(EVENT_RUN_END, () => {
     try {
@@ -139,5 +147,5 @@ function testrailReporter(runner, options) {
   });
 }
 
+module.exports =  testrailReporter;
 
-module.exports = testrailReporter;
