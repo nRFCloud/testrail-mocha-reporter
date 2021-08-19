@@ -62,7 +62,6 @@ function getReporterOptions(reporterOptions) {
   };
 }
 
-
 function testrailReporter(runner, options) {
   this.results = [];
   // Ensure stats collector has been initialized
