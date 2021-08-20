@@ -240,7 +240,7 @@ class TestrailClass {
       logger(
         `
         Adding results failed with err
-        ${err}
+        ${JSON.stringify(err)}
         `
       );
       throw new Error(`${err}`);
