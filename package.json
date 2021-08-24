@@ -27,6 +27,7 @@
     "getenv": "^1.0.0",
     "json-stringify-safe": "^5.0.1",
     "testrail-api": "^1.3.6",
+    "testrail-mocha-reporter": "https://github.com/nRFCloud/testrail-mocha-reporter.git",
     "typescript": "^4.3.5"
   },
   "peerDependencies": {
